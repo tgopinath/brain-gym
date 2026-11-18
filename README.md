@@ -52,3 +52,7 @@ src/
 ### Note on scores
 
 Brain/skill scores are game-performance measures (accuracy weighted by level). They are not a validated cognitive assessment; the Progress screen says so.
+
+## Phone apps (native looks)
+
+The Android app (Capacitor shell, `~/Documents/android-wrappers/brain-gym`) and the iPhone app (`tgopinath/BrainGym-iOS`, SwiftUI WKWebView shell) load the live site. Inside them `src/lib/native.ts` switches on the shared Kolam kits loaded in `index.html`: Material Design 3 app bar and navigation bar in the Android app, Apple HIG navigation bar and tab bar in the iPhone app. In a browser nothing changes. Preview in a browser with `?app=android`, `?app=ios`, and `?app=web` to go back.
