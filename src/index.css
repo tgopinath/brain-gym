@@ -131,7 +131,8 @@ html.k-android:is(.bg-playing, .bg-onboarding) .md-navigation-bar,
 html.k-ios:is(.bg-playing, .bg-onboarding) .ios-tabbar { display: none !important; }
 html.k-android:is(.bg-playing, .bg-onboarding) body { padding-bottom: var(--md-inset-bottom, 0px) !important; }
 html.k-ios:is(.bg-playing, .bg-onboarding) body { padding-bottom: env(safe-area-inset-bottom) !important; }
-html.k-android.bg-onboarding .md-top-app-bar, html.k-ios.bg-onboarding .ios-navbar { display: none !important; }
+html.k-android.bg-onboarding .md-top-app-bar, html.k-ios.bg-onboarding :is(.ios-navbar, .ios-largetitle) { display: none !important; }
+html.k-ios.bg-onboarding body { padding-top: env(safe-area-inset-top) !important; }
 /* Android: Material shapes for the app's own cards and buttons */
 html.k-android .card { border-radius: 16px; box-shadow: none; border-color: transparent; background: var(--md-sys-color-surface-container-low, #fff); }
 html.k-android :is(.btn, .btn-primary) { border-radius: 999px; box-shadow: none; transform: none; }
