@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #7557f6;
+  --color-primary-dark: #5a3fe0;
+  --color-primary-soft: #ece8ff;
+  --color-secondary: #3898ff;
+  --color-accent: #ffaa45;
+  --color-success: #35c98b;
+  --color-danger: #f0506e;
+  --color-bg: #f6f4ff;
+  --color-card: #ffffff;
+  --color-ink: #20213a;
+  --color-muted: #777a91;
+  --color-line: #e7e4f5;
+
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+
+  --shadow-soft: 0 6px 24px -8px rgb(76 56 180 / 0.18);
+  --shadow-pop: 0 14px 40px -12px rgb(76 56 180 / 0.35);
+  --radius-4xl: 2rem;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #e4ddff 0%, transparent 60%),
+    radial-gradient(900px 400px at 110% 0%, #dbeaff 0%, transparent 55%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Clear, consistent keyboard focus */
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+.high-contrast {
+  --color-muted: #4a4d66;
+  --color-line: #b9b4d6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@utility card {
+  @apply bg-card rounded-3xl shadow-soft border border-line/60;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 font-bold transition
+    active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none select-none;
+}
+@utility btn-primary {
+  @apply btn bg-primary text-white shadow-[0_6px_0_0_#5a3fe0] hover:brightness-110 active:shadow-[0_2px_0_0_#5a3fe0] active:translate-y-[3px];
+}
+@utility btn-accent {
+  @apply btn bg-accent text-ink shadow-[0_6px_0_0_#e08a20] hover:brightness-105 active:shadow-[0_2px_0_0_#e08a20] active:translate-y-[3px];
+}
+@utility btn-ghost {
+  @apply btn bg-white text-ink border border-line hover:border-primary/40 hover:bg-primary-soft;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold;
+}
+@utility tile {
+  @apply rounded-2xl bg-white border-2 border-line font-display font-semibold text-ink
+    transition hover:border-primary hover:-translate-y-0.5 hover:shadow-soft active:scale-95
+    disabled:pointer-events-none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.animate-shake { animation: shake 0.4s ease; }
+
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.animate-pop { animation: pop 0.35s ease-out both; }
+
+/* ---------- Phone apps (src/lib/native.ts) ----------
+   html.k-android = Android app (Material 3 bars from the Kolam M3 kit); html.k-ios = iPhone app (HIG bars from the
+   Kolam iOS kit). The website's own header and tab bar give way to the native bars; nothing changes in a browser. */
+html:is(.k-android, .k-ios) .site-header,
+html:is(.k-android, .k-ios) .site-tabbar { display: none !important; }
+html:is(.k-android, .k-ios) main { padding-bottom: 16px; }
+html.k-android body, html.k-ios body { background: var(--color-bg); }
+/* while a game runs (and during onboarding) the game owns the screen: no tab bar */
+html.k-android:is(.bg-playing, .bg-onboarding) .md-navigation-bar,
+html.k-ios:is(.bg-playing, .bg-onboarding) .ios-tabbar { display: none !important; }
+html.k-android:is(.bg-playing, .bg-onboarding) body { padding-bottom: var(--md-inset-bottom, 0px) !important; }
+html.k-ios:is(.bg-playing, .bg-onboarding) body { padding-bottom: env(safe-area-inset-bottom) !important; }
+html.k-android.bg-onboarding .md-top-app-bar, html.k-ios.bg-onboarding .ios-navbar { display: none !important; }
+/* Android: Material shapes for the app's own cards and buttons */
+html.k-android .card { border-radius: 16px; box-shadow: none; border-color: transparent; background: var(--md-sys-color-surface-container-low, #fff); }
+html.k-android :is(.btn, .btn-primary) { border-radius: 999px; box-shadow: none; transform: none; }
+/* iPhone: inset-grouped surfaces and capsule buttons */
+html.k-ios body { background: var(--ios-grouped, #f2f2f7); }
+html.k-ios .card { border-radius: 22px; box-shadow: none; border-color: transparent; background: var(--ios-grouped2, #fff); }
+html.k-ios :is(.btn, .btn-primary) { border-radius: 999px; box-shadow: none; }
+html.k-ios :is(a, button):active { opacity: 0.6; }
